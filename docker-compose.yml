@@ -1,0 +1,9 @@
+services:
+  database:
+    image: postgres
+    environment:
+      POSTGRES_DB: blob
+      POSTGRES_USER: superuser
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5432:5432

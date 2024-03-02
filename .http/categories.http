@@ -1,0 +1,15 @@
+@id = 1
+
+###
+GET http://localhost:8080/api/v1/categories
+
+###
+GET http://localhost:8080/api/v1/categories/{{id}}
+
+###
+POST http://localhost:8080/api/v1/categories
+Content-Type: application/json
+
+{
+  "name": "C++"
+}
