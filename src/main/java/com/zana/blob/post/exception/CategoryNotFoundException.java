@@ -1,6 +1,5 @@
 package com.zana.blob.post.exception;
 
-import java.util.Set;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -11,11 +10,7 @@ public class CategoryNotFoundException extends RuntimeException {
     super("Category not found");
   }
 
-  public CategoryNotFoundException(String category) {
-    super(String.format("Category not found: %s", category));
-  }
-
-  public CategoryNotFoundException(Set<String> categories) {
-    super(String.format("Category not found: %s", categories));
+  public CategoryNotFoundException(long id) {
+    super(String.format("Category of `id=%s` not found", id));
   }
 }

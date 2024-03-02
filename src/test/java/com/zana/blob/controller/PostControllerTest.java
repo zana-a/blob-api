@@ -10,15 +10,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import com.zana.blob.post.controller.PostController;
-import com.zana.blob.post.dto.CategoryDto;
 import com.zana.blob.post.dto.PostDto;
+import com.zana.blob.post.dto.PostSaveDto;
 import com.zana.blob.post.service.CategoryService;
 import com.zana.blob.post.service.PostService;
-import java.time.LocalDate;
 import java.util.List;
-import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -28,6 +25,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @WebMvcTest(controllers = PostController.class)
 public class PostControllerTest {
+
+  private final List<PostDto> posts = ImmutableList.<PostDto>builder()
+      .add(PostDto.builder().build())
+      .add(PostDto.builder().build())
+      .add(PostDto.builder().build())
+      .build();
 
   @Autowired
   private MockMvc mockMvc;
@@ -42,12 +45,6 @@ public class PostControllerTest {
   @Autowired
   private ObjectMapper objectMapper;
 
-  private final List<PostDto> posts = ImmutableList.<PostDto>builder()
-      .add(PostDto.builder().build())
-      .add(PostDto.builder().build())
-      .add(PostDto.builder().build())
-      .build();
-
   @Test
   public void getAllPosts() throws Exception {
     when(postService.getPosts())
@@ -58,8 +55,7 @@ public class PostControllerTest {
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-        .andExpect(content().json(objectMapper.writeValueAsString(posts)))
-        .andReturn();
+        .andExpect(content().json(objectMapper.writeValueAsString(posts)));
   }
 
   @Test
@@ -72,8 +68,7 @@ public class PostControllerTest {
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-        .andExpect(content().json(objectMapper.writeValueAsString(posts)))
-        .andReturn();
+        .andExpect(content().json(objectMapper.writeValueAsString(posts)));
   }
 
   @Test
@@ -87,8 +82,7 @@ public class PostControllerTest {
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-        .andExpect(content().json(objectMapper.writeValueAsString(posts)))
-        .andReturn();
+        .andExpect(content().json(objectMapper.writeValueAsString(posts)));
   }
 
   @Test
@@ -102,8 +96,7 @@ public class PostControllerTest {
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-        .andExpect(content().json(objectMapper.writeValueAsString(posts)))
-        .andReturn();
+        .andExpect(content().json(objectMapper.writeValueAsString(posts)));
   }
 
   @Test
@@ -117,7 +110,18 @@ public class PostControllerTest {
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-        .andExpect(content().json(objectMapper.writeValueAsString(posts.getFirst())))
-        .andReturn();
+        .andExpect(content().json(objectMapper.writeValueAsString(posts.getFirst())));
+  }
+
+  @Test
+  public void savePost() throws Exception {
+    when(postService.savePost(PostSaveDto.builder().build()))
+        .thenReturn(posts.getFirst());
+
+    mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/posts"))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(content().json(objectMapper.writeValueAsString(posts.getFirst())));
   }
 }
