@@ -29,4 +29,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
   @Query("SELECT p FROM PostEntity p WHERE p.createdAt = ?1 AND p.slug = ?2")
   Optional<PostEntity> findByDateAndSlug(LocalDate date, String slug);
 
+  @Query("SELECT p FROM PostEntity p JOIN p.categories c WHERE c.id = ?1")
+  List<PostEntity> findByCategory(long id);
+
 }

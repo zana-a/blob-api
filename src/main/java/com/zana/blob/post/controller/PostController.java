@@ -2,6 +2,7 @@ package com.zana.blob.post.controller;
 
 import com.zana.blob.post.dto.PostDto;
 import com.zana.blob.post.dto.PostSaveDto;
+import com.zana.blob.post.entity.PostEntity;
 import com.zana.blob.post.service.PostService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -25,27 +26,37 @@ public class PostController {
     return ResponseEntity.ok(postService.getPosts());
   }
 
-  @GetMapping("/{year}")
+  @GetMapping("/date/{year}")
   public ResponseEntity<List<PostDto>> getPostsByYear(@PathVariable int year) {
     return ResponseEntity.ok().body(postService.getPostsByYear(year));
   }
 
-  @GetMapping("/{year}/{month}")
+  @GetMapping("/date/{year}/{month}")
   public ResponseEntity<List<PostDto>> getPostsByYearAndMonth(@PathVariable int year,
       @PathVariable int month) {
     return ResponseEntity.ok().body(postService.getPostsByYearAndMonth(year, month));
   }
 
-  @GetMapping("/{year}/{month}/{day}")
+  @GetMapping("/date/{year}/{month}/{day}")
   public ResponseEntity<List<PostDto>> getPostsByYearAndMonthAndDay(@PathVariable int year,
       @PathVariable int month, @PathVariable int day) {
     return ResponseEntity.ok().body(postService.getPostsByYearAndMonthAndDay(year, month, day));
   }
 
-  @GetMapping("/{year}/{month}/{day}/{slug}")
+  @GetMapping("/date/{year}/{month}/{day}/{slug}")
   public ResponseEntity<PostDto> getPostsByDateAndSlug(@PathVariable int year,
       @PathVariable int month, @PathVariable int day, @PathVariable String slug) {
     return ResponseEntity.ok(postService.getPostByDateAndSlug(year, month, day, slug));
+  }
+
+  @GetMapping("/category/{id}")
+  public ResponseEntity<List<PostDto>> getPostsByCategory(@PathVariable long id) {
+    return ResponseEntity.ok(postService.getPostsByCategory(id));
+  }
+
+  @GetMapping("{id}")
+  public ResponseEntity<PostEntity> getPostById(@PathVariable long id) {
+    return ResponseEntity.ok(postService.getPostById(id));
   }
 
   @PostMapping

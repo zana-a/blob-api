@@ -2,6 +2,7 @@ package com.zana.blob.post.service;
 
 import com.zana.blob.post.dto.PostDto;
 import com.zana.blob.post.dto.PostSaveDto;
+import com.zana.blob.post.entity.PostEntity;
 import com.zana.blob.post.exception.CategoryNotFoundException;
 import com.zana.blob.post.exception.PostExistsException;
 import com.zana.blob.post.exception.PostNotFoundException;
@@ -67,6 +68,12 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
+  public List<PostDto> getPostsByCategory(long id) {
+    var posts = postRepository.findByCategory(id);
+    return posts.stream().map(postEntityToPostDtoMapper).toList();
+  }
+
+  @Override
   public PostDto savePost(PostSaveDto postSaveDto) {
     var date = LocalDate.now();
     var slug = slugHelper.createSlug(postSaveDto.getTitle());
@@ -99,5 +106,12 @@ public class PostServiceImpl implements PostService {
     log.info("Post `{}` (id={}}) saved", savedPostEntity.getTitle(), savedPostEntity.getId());
 
     return postEntityToPostDtoMapper.apply(savedPostEntity);
+  }
+
+  @Override
+  public PostEntity getPostById(long id) {
+    return postRepository
+        .findById(id)
+        .orElseThrow(PostNotFoundException::new);
   }
 }

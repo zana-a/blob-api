@@ -15,6 +15,7 @@ public class PostEntityToPostDtoMapper implements Function<PostEntity, PostDto> 
   @Override
   public PostDto apply(PostEntity input) {
     return PostDto.builder()
+        .id(input.getId())
         .title(input.getTitle())
         .slug(input.getSlug())
         .content(input.getContent())

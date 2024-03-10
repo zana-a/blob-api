@@ -2,6 +2,7 @@ package com.zana.blob.post.service;
 
 import com.zana.blob.post.dto.PostDto;
 import com.zana.blob.post.dto.PostSaveDto;
+import com.zana.blob.post.entity.PostEntity;
 import java.util.List;
 
 public interface PostService {
@@ -16,6 +17,10 @@ public interface PostService {
 
   PostDto getPostByDateAndSlug(int year, int month, int day, String slug);
 
+  List<PostDto> getPostsByCategory(long id);
+
   PostDto savePost(PostSaveDto postSaveDto);
 
+  PostEntity getPostById(long id);
+  
 }

@@ -11,7 +11,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostDto {
+public class
+PostDto {
+
+  private long id;
 
   private String title;
 

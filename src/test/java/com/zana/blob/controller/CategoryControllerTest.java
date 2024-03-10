@@ -39,6 +39,7 @@ public class CategoryControllerTest {
   private CategoryService categoryService;
 
   @MockBean
+  @SuppressWarnings("unused")
   private PostService postService;
 
   @Test
